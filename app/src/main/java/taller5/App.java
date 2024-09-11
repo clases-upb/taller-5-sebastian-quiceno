@@ -8,23 +8,45 @@ public class App {
     public static void main(String[] args) {
         
         try {
-            
+            System.out.println(Encontrar_numero((short)9452)+"\n");
+            System.out.println(Simular_ventas()+"\n");
+            System.out.println(Calcular_empaque(624)+"\n");
+            System.out.println(Jugar21((byte)4));
         } 
         
         catch (Exception e) {
-            // TODO: handle exception
+          
         }
     }
-
-
     /*
     
         1.	Desarrolle un algoritmo e impleméntelo en Java que: le pida al usuario un número entero positivo 
         entre 1000 y 9999. En un ciclo genere números de manera aleatoria y cuente los intentos que hizo antes 
         de hallar el número exactamente.
-        
-    
     */ 
+    public static String Encontrar_numero(int numero){
+        try {
+            if(numero>=1000 && numero<=9999){
+                String respuesta="";
+                short num_aleatorio=0, intento=0;
+                final short max=9999,min=1000;
+                while(num_aleatorio!=numero){
+                    intento++;
+                    num_aleatorio=(short)(Math.random()*(max-min+1)+min);
+                }
+                respuesta="El total de intentos para encontrar el numero fue de: "+intento;
+                System.out.println(num_aleatorio);
+                return respuesta;
+
+
+
+            }else 
+            return "El numero ingresado no es valido";
+            
+        } catch (Exception e) {
+            return "Ocurrio un error \n"+e;
+        }
+    }
 
 
 
@@ -56,12 +78,32 @@ public class App {
             
             Investigue sobre la clase DecimalFormat para mostrar bien la salida. 
             import java.text.DecimalFormat;
-            DecimalFormat form_pesos = new DecimalFormat("$#,###.00");
-
-        
-      
+            DecimalFormat form_pesos = new DecimalFormat("$#,###.00");      
     */
-
+    public static String Simular_ventas(){
+        try {
+            String devuelta="";
+            int ventas=0, total_ventas=0;
+            byte meses=0, anos=0;
+            final int max=99999999;
+            for (byte año=1; año<=3; año++) {
+                anos++;               
+                devuelta+="Año "+anos+"\n";
+                for(byte mes=1; mes<=12; mes ++){
+                    ventas=(int)(Math.random()*(max+1));
+                    meses++;                   
+                    devuelta+="Ventas Mes "+meses+" : $"+ventas+"\n";
+                    total_ventas+=ventas;
+                }
+  
+                devuelta+="Total ventas Año "+anos+": $"+total_ventas+"\n";
+                meses=0;
+            }
+            return devuelta;
+        } catch (Exception e) {
+            return "ocurrio un error";
+        }
+    }
     
 
 
@@ -85,7 +127,38 @@ public class App {
 
 
     */
-
+    public static String Calcular_empaque(int bombillas){
+        try {
+            final int max_cajas=16, max_bombillas=30;
+            int num_pallet=0, num_caja=0, num_bombillas=0;
+            String retorno1="", retorno2="";
+            num_bombillas=bombillas;
+            if (bombillas<0) {
+                return "Numero de bombillas no valido";
+            } else {
+                
+            
+            while(bombillas>=max_bombillas){
+                for(int caja=0; caja<=max_cajas; caja ++){
+                    for(int bom=1; bom<=max_bombillas;bom++){
+                        
+                        bombillas--;
+                    }
+                    if(bombillas<max_bombillas)
+                    caja=max_cajas;
+                    num_caja ++;
+                    retorno1+="caja"+num_caja+", ";
+                }
+                num_pallet++;
+                retorno2+="pallet "+num_pallet+" --> "+retorno1+"\n";
+                retorno1="";
+            }
+            return "Para "+num_bombillas+" bombilals, se necesitan "+num_caja+" cajas y "+num_pallet+" pallets. Se quedan "+bombillas+" sin empacar. Se empacara asi:\n"+retorno2;
+        }
+        } catch (Exception e) {
+            return "-1";
+        }
+    }
 
 
     
@@ -111,7 +184,40 @@ public class App {
 
 
     */
+    public static String Jugar21(byte jugadores){
+        try {
+            final byte num_cartas=3, max_carta=12;
+            byte total_cartas=0, carta=0, jugador=0;
+            String retorno1="";
+            if (jugadores>6|| jugadores<=0) 
+                return "numero de jugadores no valido";
+            else {      
+            for(byte ciclo=1;ciclo<=jugadores;ciclo++){
+                for(byte cartas=1;cartas<=num_cartas;cartas++){
+                    carta=(byte)(Math.random()*(max_carta+1));
+                    total_cartas+=carta;
+                    
+                }
+                jugador++;
+                
+                if(total_cartas==21)
+                    retorno1+="jugador "+jugador+",  puntos "+total_cartas+ " --> juego perfecto \n";
+                else if(total_cartas>21)
+                    retorno1+="jugador "+jugador+",  puntos "+total_cartas+ " --> se paso \n";
+                else if(total_cartas<21)
+                    retorno1+="jugador "+jugador+",  puntos "+total_cartas+ " --> le falto \n";
+                    
+                total_cartas=0;
+            }
+            return retorno1;
+        }
+
+        } catch (Exception e) {
+            return "ocurrio un error"+e;
+        }
+
+    }
 
 
-
+    
 }
